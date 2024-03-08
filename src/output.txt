@@ -1,0 +1,1 @@
+Flower: rose, Quantity: 5, Total Price: 50.0

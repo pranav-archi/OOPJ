@@ -1,10 +1,46 @@
-CREATE DATABASE flower_shop;
-USE flower_shop;
-CREATE TABLE flowers(
-flower_name VARCHAR(50);
-quantity DECIMAL(2,0);
-price DOUBLE(5,1);
-)
-INSERT INTO flowers
-VALUES(daisy,65,4.5);
-SELECT * FROM flowers;
+gardenia, 10.5 INR, 25
+umbrella plant, 7.5 INR, 40
+anemone, 8.0 INR, 40
+thistle, 9.0 INR, 35
+amaryllis, 11.5 INR, 25
+carnation, 4.5 INR, 55
+hydrangea, 11.0 INR, 25
+crocus, 5.0 INR, 50
+heather, 6.0 INR, 50
+jasmine, 8.0 INR, 40
+magnolia, 12.0 INR, 20
+fuchsia, 7.0 INR, 45
+wisteria, 8.0 INR, 45
+chrysanthemum, 5.5 INR, 60
+snapdragon, 7.5 INR, 35
+pansy, 6.0 INR, 50
+daisy, 5.0 INR, 45
+freesia, 7.0 INR, 45
+lavender, 9.5 INR, 30
+quince, 8.5 INR, 30
+begonia, 6.5 INR, 40
+iris, 6.0 INR, 55
+daffodil, 3.5 INR, 70
+violet, 12.5 INR, 25
+gerbera, 6.0 INR, 50
+tulip, 6.5 INR, 60
+zinnia, 4.0 INR, 65
+sunflower, 7.5 INR, 30
+kalanchoe, 5.5 INR, 60
+narcissus, 7.0 INR, 45
+zantedeschia, 9.0 INR, 35
+dahlia, 9.0 INR, 35
+marigold, 4.5 INR, 55
+rhododendron, 10.0 INR, 20
+yarrow, 11.0 INR, 30
+calla lily, 10.0 INR, 25
+salvia, 5.5 INR, 60
+lily, 8.0 INR, 40
+gladiolus, 9.5 INR, 30
+rose, 10.0 INR, 45
+hyacinth, 8.5 INR, 30
+oleander, 11.0 INR, 25
+peony, 9.0 INR, 35
+bird of paradise, 15.0 INR, 20
+orchid, 12.0 INR, 20
+xerophyte, 6.5 INR, 55

@@ -7,7 +7,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class FlowerShop {
-    private static final String PRODUCTS_FILE = "products.txt";
+    private static final String PRODUCTS_FILE = "C:\\JavaProjects\\FlowerShop\\src\\products.txt";
+    private static final String OUTPUT_FILE = "C:\\JavaProjects\\FlowerShop\\src\\output.txt";
 
     public static void main(String[] args) {
         Map<String, Flower> flowers = readFlowersFromFile(PRODUCTS_FILE);
@@ -28,8 +29,15 @@ public class FlowerShop {
             System.out.println("4. Exit");
 
             System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choice;
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Consume invalid input
+                continue;
+            }
 
             switch (choice) {
                 case 1:
@@ -54,7 +62,8 @@ public class FlowerShop {
     private static void printAllFlowerInfo(Map<String, Flower> flowers) {
         System.out.println("Available flowers:");
         for (Flower flower : flowers.values()) {
-            System.out.println("- " + flower.getName() + ", Price:" + flower.getPrice() + "INR, Quantity: " + flower.getQuantity());
+            System.out.println(
+                    "- " + flower.getName() + ", Price: " + flower.getPrice() + ", Quantity: " + flower.getQuantity());
         }
     }
 
@@ -75,8 +84,15 @@ public class FlowerShop {
         Flower selectedFlower = flowers.get(chosenFlower);
 
         System.out.print("Enter the quantity you want: ");
-        int quantity = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        int quantity;
+        try {
+            quantity = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a valid quantity.");
+            scanner.nextLine(); // Consume invalid input
+            return;
+        }
 
         if (quantity > selectedFlower.getQuantity()) {
             System.out.println("Sorry, we don't have enough quantity available for your request.");
@@ -86,9 +102,9 @@ public class FlowerShop {
         double totalPrice = selectedFlower.getPrice() * quantity;
         System.out.println("\n--- Order Summary ---");
         System.out.println("Flower: " + selectedFlower.getName());
-        System.out.println("Price per unit: " + selectedFlower.getPrice()+"INR");
+        System.out.println("Price per unit: " + selectedFlower.getPrice());
         System.out.println("Quantity: " + quantity);
-        System.out.println("Total Price: " + totalPrice+"INR");
+        System.out.println("Total Price: " + totalPrice);
 
         System.out.print("\nConfirm purchase (yes/no): ");
         String confirm = scanner.nextLine();
@@ -99,6 +115,9 @@ public class FlowerShop {
 
             // Add purchased flower to the cart
             addToCart(selectedFlower, quantity, cart);
+
+            // Write purchase details to file
+            writePurchaseToFile(selectedFlower.getName(), quantity, totalPrice);
         }
     }
 
@@ -119,7 +138,8 @@ public class FlowerShop {
 
         System.out.println("\n--- Your Cart ---");
         for (Flower flower : cart.values()) {
-            System.out.println("- " + flower.getName() + ", Quantity: " + flower.getQuantity() + ", Total Price: $" + (flower.getPrice() * flower.getQuantity()));
+            System.out.println("- " + flower.getName() + ", Quantity: " + flower.getQuantity() + ", Total Price: "
+                    + (flower.getPrice() * flower.getQuantity()));
         }
     }
 
@@ -131,7 +151,9 @@ public class FlowerShop {
                 String[] parts = line.split(",");
                 if (parts.length == 3) {
                     String flowerName = parts[0].trim().toLowerCase(); // Convert to lowercase
-                    double price = Double.parseDouble(parts[1].trim());
+                    String[] priceParts = parts[1].trim().split(" ");
+                    double price = Double.parseDouble(priceParts[0].trim());
+                    // Assuming the quantity is always an integer
                     int quantity = Integer.parseInt(parts[2].trim());
                     flowers.put(flowerName, new Flower(flowerName, price, quantity));
                 }
@@ -140,6 +162,14 @@ public class FlowerShop {
             e.printStackTrace();
         }
         return flowers;
+    }
+
+    private static void writePurchaseToFile(String flowerName, int quantity, double totalPrice) {
+        try (FileWriter writer = new FileWriter(OUTPUT_FILE, true)) {
+            writer.write("Flower: " + flowerName + ", Quantity: " + quantity + ", Total Price: " + totalPrice + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     static class Flower {
@@ -174,4 +204,3 @@ public class FlowerShop {
         }
     }
 }
-
